@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
   }
 }
 
+/* Login & Register Pages */
 .auth {
   @apply w-full h-lvh flex items-center justify-center;
 }
