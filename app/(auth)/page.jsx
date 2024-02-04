@@ -2,7 +2,7 @@ import Form from "@components/Form"
 
 const Login = () => {
   return (
-    <Form />
+    <Form  type="login"/>
   )
 }
 
