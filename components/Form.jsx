@@ -1,4 +1,5 @@
 import { EmailOutlined, LockOutlined, Person, PersonOutline } from '@mui/icons-material'
+import Link from 'next/link'
 import React from 'react'
 
 const Form = ({type}) => {
@@ -25,6 +26,15 @@ const Form = ({type}) => {
             {type === "register" ? "Join Free" : "Let's Chat"}
           </button>
         </form>
+        {type === "register" ? (
+          <Link href={'/'} className='link'>
+            <p className='text-center'>Already have an Account? Login</p>
+          </Link>
+        ) : (
+          <Link href={'/register'} className='link'>
+            <p className='text-center'>Don't have account? Register</p>
+          </Link>
+        )}
       </div>
     </div>
   )
