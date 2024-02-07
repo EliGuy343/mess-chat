@@ -7,20 +7,21 @@ import { useForm } from 'react-hook-form'
 const Form = ({type}) => {
   const {
     register, 
-    handleSumbit,
+    handleSubmit,
     watch,
     formState: {errors},
   } = useForm();
-
+  const onSubmit = async (data) => {console.log(data)};
   return (
     <div className='auth'>
       <div className='content'>
         <img src='/assets/logo.png' alt='logo' className='logo'/>
-        <form className='form'>
+        <form className='form' onSubmit={handleSubmit(onSubmit)}>
           {type == "register" && (
-            <>
+            <div>
               <div className='input'>
                 <input
+                  defaultValue=""
                   type='text'
                   placeholder='Username'
                   className='input-field'
@@ -31,11 +32,12 @@ const Form = ({type}) => {
               {errors.email && (
                 <p className='text-red-500'>{errors.email.message}</p>
               )}
-            </>
+            </div>
           )}
-          <>
+          <div>
             <div className='input'>
               <input
+                defaultValue=""
                 type='text'
                 placeholder='Email'
                 className='input-field'
@@ -46,24 +48,31 @@ const Form = ({type}) => {
             {errors.username && (
                 <p className='text-red-500'>{errors.username.message}</p>
             )}
-          </>
-          <div  className='input'>
-            <input
-              type='password'
-              placeholder='Password' 
-              className='input-field'
-              {...register("password", {
-                  required:"Password is required",
-                  validate:(value) => {
-                    if(value.length < 6) {
-                      return "Password needs to be at least 6 characters long"
-                    }
-                  }
-              })}
-            />
-            <LockOutlined sx={{color: "#737373"}}/>
           </div>
-          <button className='button'  type='sumbit'>
+          <div>
+
+            <div  className='input'>
+              <input
+                defaultValue=""
+                type='password'
+                placeholder='Password' 
+                className='input-field'
+                {...register("password", {
+                    required:"Password is required",
+                    validate:(value) => {
+                      if(value.length < 6) {
+                        return "Password needs to be at least 6 characters long"
+                      }
+                    }
+                })}
+              />
+              <LockOutlined sx={{color: "#737373"}}/>
+            </div>
+            {errors.username && (
+                  <p className='text-red-500'>{errors.username.message}</p>
+              )}
+          </div>
+          <button className='button'  type='submit'>
             {type === "register" ? "Join Free" : "Let's Chat"}
           </button>
         </form>
