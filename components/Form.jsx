@@ -1,17 +1,43 @@
 "use client"  
 import { EmailOutlined, LockOutlined, Person, PersonOutline } from '@mui/icons-material'
+import axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+
 
 const Form = ({type}) => {
+
   const {
     register, 
     handleSubmit,
     watch,
     formState: {errors},
   } = useForm();
-  const onSubmit = async (data) => {console.log(data)};
+
+  const router = useRouter();
+
+  const onSubmit = async (data) => {
+    if (type === "register") {
+      const res = await fetch("/api/auth/register",{
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if(res.ok) {
+        router.push("/");
+      }
+      if (res.error) {
+        toast.error(res.error);
+      }
+    }
+  };
+
   return (
     <div className='auth'>
       <div className='content'>
