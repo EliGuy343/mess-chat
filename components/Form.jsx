@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-
+import {signIn} from "next-auth/react";
 
 const Form = ({type}) => {
 
@@ -35,6 +35,20 @@ const Form = ({type}) => {
       if (res.error) {
         toast.error(res.error);
       }
+    }
+
+    if(type === "login") {
+        const res = await signIn("credentials", {
+          ...data,
+          redirect: false
+        });
+
+        if (res.ok) {
+          router.push("/chats");
+        }
+        if (res.error) {
+          toast.error("Invalid Email or Password");
+        }
     }
   };
 
