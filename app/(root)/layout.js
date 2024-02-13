@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayer({children}) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-blue-2`}>
         <ToasterContext/>
         <Provider>
           <TopBar/> 
