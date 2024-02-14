@@ -2,9 +2,10 @@
 
 import Loader from '@components/Loader'
 import { Person2Outlined } from '@mui/icons-material'
+import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { CldUploadButton } from 'next-cloudinary'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Profile = () => {
@@ -18,6 +19,7 @@ const Profile = () => {
     handleSubmit,
     formState: {error}
   } = useForm();
+
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -28,9 +30,22 @@ const Profile = () => {
       })
     }
     setLoading(false);
-  }, []);
+  }, [user]);
 
 
+  const updateUser = async (data) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `/api/users/${user._id}/update`,
+        data
+      );
+      console.log(res);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const uploadPhoto = (result) => {
     setValue("profileImage", result?.info?.secure_url);
@@ -39,7 +54,7 @@ const Profile = () => {
   return loading ? <Loader/> : (
     <div className='profile-page'>
       <h1 className='text-heading3-bold'>Edit Your Profile</h1>
-      <form className='edit-profile'>
+      <form className='edit-profile' onSubmit={handleSubmit(updateUser)}>
         <div className='input'>
           <input
             {...register("username", {
@@ -56,7 +71,10 @@ const Profile = () => {
           />
           <Person2Outlined/>
         </div>
-        <div className='flex items-center justify-between'>
+        {error?.username && (
+          <p className='text-red-500'>{error?.username?.message}</p>
+        )}
+        <div className='flex items-center justify-between'> 
           <img
             src={watch("profileImage") || user?.profileImage || "/assets/person.jpg"}
             alt='profile picture'
@@ -77,6 +95,7 @@ const Profile = () => {
         <button
           className='btn'
           type='submit'
+  
         >
           Save Changes
         </button>
