@@ -1,5 +1,4 @@
-const { default: mongoose } = require("mongoose");
-
+import mongoose from "mongoose";
 //TODO: replace with moment library for timezone adjustment
 const ChatSchema = new mongoose.Schema({
   members: {
