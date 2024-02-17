@@ -8,12 +8,14 @@ import { RadioButtonUnchecked } from "@mui/icons-material";
 const Contacts = () => {
   const [loading, setLoading] = useState(false);
   const [contacts, setContacts] = useState([]);
+  const [search, setSearch] = useState("");
+
   const {data: session} = useSession();
   const currentUser = session?.user;
 
   const getContacts = async () => {
     try {
-      const res = await fetch('/api/users');
+      const res = await fetch(search !== "" ? `/api/users/searchContacts/${search}` : '/api/users');
       const data = await res.json();
       console.log(data);
       setContacts(data.filter((contact) => contact._id !== currentUser._id));
@@ -27,12 +29,17 @@ const Contacts = () => {
     if(currentUser) {
       getContacts();
     }
-  }, [currentUser]);
+  }, [currentUser, search]);
 
 
   return loading ? <Loader/> : (
     <div className="create-chat-container">
-      <input placeholder="Search contact..." className="input-search"/>
+      <input
+        placeholder="Search contact..."
+        className="input-search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <div className="contact-bar">
         <div className="contact-list">
           <p className="text-body-bold">
