@@ -9,7 +9,6 @@ export const GET = async (req, {params}) => {
       $or:[
         {username :{$regex: query, $options: "i"}},
         {email :{$regex: query, $options: "i"}}
-
       ]
     });
 
