@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 const Contacts = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,8 @@ const Contacts = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [search, setSearch] = useState("");
   const [chatName, setChatName] = useState("");
+
+  const router = useRouter(); 
 
   const {data: session} = useSession();
   const currentUser = session?.user;
@@ -39,6 +42,22 @@ const Contacts = () => {
       setLoading(false);
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  const createChat = async () => {
+    const res = await fetch("/api/chats",{
+      method:"POST",
+      body: JSON.stringify({
+        currentUserId: currentUser._id,
+        members: selectedContacts.map((contact) => contact._id),
+        isGroup,
+        chatName
+      })
+    });
+    const chat = await res.json();
+    if(res.ok) {
+      router.push(`/chats/${chat._id}`);
     }
   }
   
