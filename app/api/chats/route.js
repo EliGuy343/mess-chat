@@ -22,13 +22,18 @@ export const POST = async (req) => {
     if(!chat) {
       chat = new Chat(
         isGroup ? query : {members:[currentUserId, ...members]}
-      );
+        );
       await chat.save();
-      await User.findByIdAndUpdate(
-        currentUserId,
-        {$addToSet:{chats: chat._id}},
-        {new: true}
-      );
+      const updateAllMembers = chat.members.map(async (memberId) => {
+        await User.findByIdAndUpdate(
+          memberId,
+          {
+            $addToSet: {chats: chat._id},
+          },
+          {new: true}
+        )
+      });
+      Promise.all(updateAllMembers);
     }
     return new Response(JSON.stringify(chat), {status: 200});
   } catch (err) {
