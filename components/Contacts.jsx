@@ -52,7 +52,7 @@ const Contacts = () => {
         currentUserId: currentUser._id,
         members: selectedContacts.map((contact) => contact._id),
         isGroup,
-        chatName
+        name:chatName
       })
     });
     const chat = await res.json();
