@@ -122,7 +122,7 @@ const Contacts = () => {
               </div>
             </>
           )}
-          <button className="btn">
+          <button className="btn" onClick={createChat}>
             Start A New Chat
           </button>
         </div>
