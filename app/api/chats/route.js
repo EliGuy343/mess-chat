@@ -17,7 +17,6 @@ export const POST = async (req) => {
     const query = isGroup 
       ? {isGroup, name, groupPhoto, members: [currentUserId, ...members]}
       : {members:{$all:[currentUserId, ...members], $size: 2}}
-    console.log(query);
     let chat = await Chat.findOne(query);
     if(!chat) {
       chat = new Chat(

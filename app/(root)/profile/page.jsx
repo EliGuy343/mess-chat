@@ -40,7 +40,6 @@ const Profile = () => {
         `/api/users/${user._id}/update`,
         data
       );
-      console.log(res);
       setLoading(false);
     } catch (error) {
       console.log(error);

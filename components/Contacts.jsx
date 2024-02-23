@@ -37,7 +37,6 @@ const Contacts = () => {
     try {
       const res = await fetch(search !== "" ? `/api/users/searchContacts/${search}` : '/api/users');
       const data = await res.json();
-      console.log(data);
       setContacts(data.filter((contact) => contact._id !== currentUser._id));
       setLoading(false);
     } catch (err) {

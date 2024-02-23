@@ -1,12 +1,10 @@
 import {format} from 'date-fns';
 const ChatBox = ({chat, currentUser}) => {
-
   const otherMembers = chat?.members?.filter(
     (member) => member._id !== currentUser._id
   );
   const lastMessage = chat?.messages?.length > 0
     && chat?.messages[chat?.messages.length - 1];
-
   return (
     <div className="chat-box">
       <div className="chat-info">
@@ -37,5 +35,4 @@ const ChatBox = ({chat, currentUser}) => {
     </div>
   )
 }
-
 export default ChatBox
