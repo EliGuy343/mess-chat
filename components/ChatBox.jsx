@@ -10,7 +10,7 @@ const ChatBox = ({chat, currentUser}) => {
       <div className="chat-info">
         {chat?.isGroup ? (
           <img 
-            src={chat?.groupPhoto || "/assets/group.jpg"}
+            src={chat?.groupPhoto || "/assets/group.png"}
             alt="group-pic"
             className="profilePhoto"
           />
@@ -21,16 +21,17 @@ const ChatBox = ({chat, currentUser}) => {
             className="profilePhoto"
           />
         )}
+        {/* TODO: fix nameless groups */}
         <div className="flex flex-col gap-1">
           {chat?.isGroup ? (
             <p className="text-base-bold">{chat?.name}</p>
           ) : (
             <p className="text-base-bold">{otherMembers[0]?.username}</p>
           )}
+          <p className="text-base-light text-gray-3">
+            {!lastMessage && format(new Date(chat?.createdAt), "p")}
+          </p>
         </div>
-        <p className="text-base-light text-gray-3">
-          {!lastMessage && format(new Date(chat?.createdAt), "p")}
-        </p>
       </div>
     </div>
   )

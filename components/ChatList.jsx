@@ -29,7 +29,6 @@ const ChatList = () => {
     }
 
   }, [currentUser]);
-
   return loading ? <Loader/> : (
     <div className="chat-list">
       <input placeholder="search chat..." className="input-search" />
