@@ -1,12 +1,15 @@
 import {format} from 'date-fns';
+import { useRouter } from 'next/navigation';
 const ChatBox = ({chat, currentUser}) => {
   const otherMembers = chat?.members?.filter(
     (member) => member._id !== currentUser._id
   );
   const lastMessage = chat?.messages?.length > 0
     && chat?.messages[chat?.messages.length - 1];
+  const router = useRouter();
+
   return (
-    <div className="chat-box">
+    <div className="chat-box" onClick={() => router.push(`/chats/${chat._id}`)}>
       <div className="chat-info">
         {chat?.isGroup ? (
           <img 
