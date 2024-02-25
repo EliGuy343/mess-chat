@@ -6,13 +6,15 @@ export const GET = async (req, {params}) => {
   try {
     await connectToDB();
     const {userId, query} = params;
+    console.log(query)
     const searchedChat = await Chat.find({
       members:userId,
       name: {$regex: query, $options: "i"},
     }).populate({
       path: "members",
       model: User,
-    }).exec();
+    })
+    .exec();
     return new Response(JSON.stringify(searchedChat), {status: 200})
   } catch (err) {
     console.log(err);

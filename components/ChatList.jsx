@@ -11,10 +11,13 @@ const ChatList = () => {
 
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
-
+  const [search, setSearch] = useState("");
   const getChats = async () => {
     try {
-      const res = await fetch(`/api/users/${currentUser._id}`);
+      const res = await fetch(search !== "" 
+        ?`/api/users/${currentUser._id}/searchChat/${search}` 
+        :`/api/users/${currentUser._id}`
+      );
     const data = await res.json();
     setChats(data);
     setLoading(false);
@@ -28,10 +31,15 @@ const ChatList = () => {
       getChats()
     }
 
-  }, [currentUser]);
+  }, [currentUser, search]);
   return loading ? <Loader/> : (
     <div className="chat-list">
-      <input placeholder="search chat..." className="input-search" />
+      <input
+        placeholder="search chat..." 
+        className="input-search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)} 
+      />
       {chats.map((chat, index) => (
         <ChatBox chat={chat} index={index} currentUser={currentUser}/>
       ))}
