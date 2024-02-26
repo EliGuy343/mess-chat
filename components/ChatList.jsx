@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import ChatBox from "./ChatBox";
 
-const ChatList = () => {
+const ChatList = ({currentChatId}) => {
   const {data: sessions} = useSession();
   const currentUser = sessions?.user;
 
@@ -14,6 +14,7 @@ const ChatList = () => {
   const [search, setSearch] = useState("");
   const getChats = async () => {
     try {
+      //TODO: Fix Search
       const res = await fetch(search !== "" 
         ?`/api/users/${currentUser._id}/searchChat/${search}` 
         :`/api/users/${currentUser._id}`
@@ -41,7 +42,7 @@ const ChatList = () => {
         onChange={(e) => setSearch(e.target.value)} 
       />
       {chats.map((chat, index) => (
-        <ChatBox chat={chat} index={index} currentUser={currentUser}/>
+        <ChatBox chat={chat} index={index} currentUser={currentUser} currentChatId={currentChatId}/>
       ))}
     </div>
   )
