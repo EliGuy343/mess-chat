@@ -41,9 +41,11 @@ const ChatList = ({currentChatId}) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)} 
       />
-      {chats.map((chat, index) => (
-        <ChatBox chat={chat} index={index} currentUser={currentUser} currentChatId={currentChatId}/>
-      ))}
+      <div className="bg-white h-screen rounded-lg p-5">
+        {chats.map((chat, index) => (
+          <ChatBox chat={chat} index={index} currentUser={currentUser} currentChatId={currentChatId}/>
+        ))}
+      </div>
     </div>
   )
 }
