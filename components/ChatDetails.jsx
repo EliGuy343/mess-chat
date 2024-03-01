@@ -53,7 +53,7 @@ const ChatDetails = ({chatId}) => {
             </Link>
             <div className="text">
               <p>
-                {chat?.name} &#160; &#183; &#160; {chat?.members?.length}
+                {chat?.name} &#160; &#183; &#160; {chat?.members?.length} members
               </p>
             </div>
           </>
@@ -70,7 +70,7 @@ const ChatDetails = ({chatId}) => {
           </>
         )}
       </div>
-      
+
       <div className="chat-body"></div>
 
       <div className="send-message">
@@ -89,7 +89,7 @@ const ChatDetails = ({chatId}) => {
             type="text"
             placeholder="type a message..."
             value={text}
-            className="w-full p-2 rounded-lg"
+            className="input-field"
             onChange={(e) => setText(e.target.value)}
             required
           />
