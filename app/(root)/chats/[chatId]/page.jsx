@@ -4,12 +4,12 @@ import ChatList from "@components/ChatList";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation"
 
+//TODO: Server side rendering
+
 const ChatPage = () => {
   const {chatId} = useParams();
   const {data: session}  = useSession();
   const currentUser = session?.user;
-
-
   return (
     <div className="main-container">
       <div className="w-1/3 max-lg:hidden">

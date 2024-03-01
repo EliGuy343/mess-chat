@@ -1,12 +1,19 @@
+"use client"
+
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import Link from "next/link";
-
+import { AddPhotoAlternate } from "@mui/icons-material";
+import { useSession } from "next-auth/react";
 
 const ChatDetails = ({chatId}) => {
+  const {data: session} = useSession();
+  const currentUser = session?.user;
+
   const [loading, setLoading] = useState(true);
   const [chat, setChat] = useState({});
   const [otherMembers, setOtherMembers] = useState([]);
+  const [text, setText] = useState("");
 
   const getChatDetails = async () => {
     try {
@@ -36,18 +43,20 @@ const ChatDetails = ({chatId}) => {
     <div className="chat-details">
       <div className="chat-header">
         {chat?.isGroup ? (
-          <Link>
-            <img
-              src={chat?.groupPhoto || "/assets/group.png"}
-              alt=""
-              className="profilePhoto"
-            />
+          <>
+            <Link href={`/chats/${chatId}/group-info`}>
+              <img
+                src={chat?.groupPhoto || "/assets/group.png"}
+                alt=""
+                className="profilePhoto"
+              />
+            </Link>
             <div className="text">
               <p>
                 {chat?.name} &#160; &#183; &#160; {chat?.members?.length}
               </p>
             </div>
-          </Link>
+          </>
         ) : (
           <>
             <img
@@ -60,6 +69,34 @@ const ChatDetails = ({chatId}) => {
             </div>
           </>
         )}
+      </div>
+      
+      <div className="chat-body"></div>
+
+      <div className="send-message">
+        <div className="prepare-message">
+          <AddPhotoAlternate 
+            sx={{
+              fontSize:"35px",
+              color:"#737373",
+              cursor:"pointer",
+              "&.hover":{
+                color:"red"
+              }
+            }}
+          />
+          <input
+            type="text"
+            placeholder="type a message..."
+            value={text}
+            className="w-full p-2 rounded-lg"
+            onChange={(e) => setText(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <img src="/assets/send.jpg" alt="send" className="send-icon"/>
+        </div>
       </div>
     </div>
   );
