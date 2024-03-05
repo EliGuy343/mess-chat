@@ -114,7 +114,7 @@ const ChatDetails = ({chatId}) => {
             required
           />
         </div>
-        <div>
+        <div onClick={sendText}>
           <img src="/assets/send.jpg" alt="send" className="send-icon"/>
         </div>
       </div>
