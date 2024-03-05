@@ -36,6 +36,7 @@ const ChatDetails = ({chatId}) => {
 
   const sendText = async () => {
     try {
+      console.log(text);
       const res = await fetch("/api/messages", {
         method:"POST",
         headers:{
