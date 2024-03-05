@@ -34,11 +34,31 @@ const ChatDetails = ({chatId}) => {
     }
   }
 
+  const sendText = async () => {
+    try {
+      const res = await fetch("/api/messages", {
+        method:"POST",
+        headers:{
+          "Content-type":"application/json"
+        },
+        body: JSON.stringify({
+          chatId,
+          currentUserId: currentUser._id,
+          text
+        })
+      });
+      setText("");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     if(currentUser && chatId) {
       getChatDetails();
     }
   }, [currentUser, chatId])
+
   return loading ? <Loader/> : (
     <div className="chat-details">
       <div className="chat-header">
