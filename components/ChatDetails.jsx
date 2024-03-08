@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import Link from "next/link";
 import { AddPhotoAlternate } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
+import { CldUploadButton } from "next-cloudinary";
 
 const ChatDetails = ({chatId}) => {
   const {data: session} = useSession();
@@ -96,16 +97,22 @@ const ChatDetails = ({chatId}) => {
 
       <div className="send-message">
         <div className="prepare-message">
-          <AddPhotoAlternate 
-            sx={{
-              fontSize:"35px",
-              color:"#737373",
-              cursor:"pointer",
-              "&.hover":{
-                color:"red"
-              }
-            }}
-          />
+          <CldUploadButton
+            options={{maxFiles: 1}}
+            onUpload={() => {}}
+            uploadPreset='npczwv3c'
+          >
+            <AddPhotoAlternate 
+              sx={{
+                fontSize:"35px",
+                color:"#737373",
+                cursor:"pointer",
+                "&.hover":{
+                  color:"red"
+                }
+              }}
+            />
+          </CldUploadButton>
           <input
             type="text"
             placeholder="type a message..."
