@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AddPhotoAlternate } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
 import { CldUploadButton } from "next-cloudinary";
+import MessageBox from "./MessageBox";
 
 const ChatDetails = ({chatId}) => {
   const {data: session} = useSession();
@@ -116,7 +117,11 @@ const ChatDetails = ({chatId}) => {
         )}
       </div>
 
-      <div className="chat-body"></div>
+      <div className="chat-body">
+        {chat?.messages?.map((message, index) => (
+          <MessageBox key={index} message={message} currentUser={currentUser}/>
+        ))}
+      </div>
 
       <div className="send-message">
         <div className="prepare-message">
