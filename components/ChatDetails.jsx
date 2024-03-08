@@ -30,11 +30,17 @@ const ChatDetails = ({chatId}) => {
       setChat(data);
       setOtherMembers(data?.members?.filter(member => member._id !== currentUser._id));
       setLoading(false);
+
+      if(res) {
+        setText("");
+      }
+
     } catch (err) {
       console.log(err);
     }
   }
-
+  //TODO: Photo with text
+  
   const sendText = async () => {
     try {
       console.log(text);
@@ -55,6 +61,23 @@ const ChatDetails = ({chatId}) => {
     }
   }
 
+  const sendPhoto = async (result) => {
+    try {
+      const res = await fetch(`/api/messages`, {
+        method:"POST",
+        headers:{
+          "Content-type":"application/json"
+        },
+        body: JSON.stringify({
+          chatId,
+          currentUserId:currentUser._id,
+          photo:result?.info?.secure_url,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     if(currentUser && chatId) {
       getChatDetails();
