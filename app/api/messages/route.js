@@ -19,7 +19,7 @@ export const POST = async (req) => {
     const updatedChat = await Chat.findByIdAndUpdate(
       chatId,
       {
-        $push: {Message: newMessage._id},
+        $push: {messages: newMessage._id},
         $set: {lastMessageAt: newMessage.createdAt},
       },
       {new: true}
@@ -33,6 +33,7 @@ export const POST = async (req) => {
       model: "User"
     })
     .exec();
+
     return new Response(JSON.stringify(newMessage), {status:200});
   } catch (err) {
     console.log(err);

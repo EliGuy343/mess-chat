@@ -16,12 +16,11 @@ export const GET = async (req, {params}) => {
         path:"messages",
         model:Message,
         populate: {
-          path: "sender seenby",
+          path: "sender seenBy",
           model: User
         }
       })
       .exec();
-
     return new Response(JSON.stringify(chat), {status: 200});
   } catch (err) {
     console.log(err);

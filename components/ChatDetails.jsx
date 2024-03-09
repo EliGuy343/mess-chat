@@ -84,7 +84,7 @@ const ChatDetails = ({chatId}) => {
       getChatDetails();
     }
   }, [currentUser, chatId])
-
+  console.log(chat.messages)
   return loading ? <Loader/> : (
     <div className="chat-details">
       <div className="chat-header">
