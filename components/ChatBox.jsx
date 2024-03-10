@@ -35,6 +35,20 @@ const ChatBox = ({chat, currentUser, currentChatId}) => {
             <p className="text-base-bold">{otherMembers[0]?.username}</p>
           )}
           {!lastMessage && <p className='text-small-bold'>Started A Chat</p>}
+          {lastMessage?.photo ? (
+            lastMessage?.sender?._id === currentUser._id ? (
+              <p className='text-small-medium text-gray-3'>You sent a photo</p>
+            )
+            : (
+              <p className='text-small-bold'>
+                received a photo
+              </p>
+            )
+          ) : (
+            <p className='text-small-medium text-gray-3'>
+              {lastMessage?.text}
+            </p>
+          )}
           <p className="text-base-light text-gray-3">
             {!lastMessage && format(new Date(chat?.createdAt), "p")}
           </p>
