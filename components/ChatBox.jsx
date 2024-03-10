@@ -7,6 +7,9 @@ const ChatBox = ({chat, currentUser, currentChatId}) => {
   const lastMessage = chat?.messages?.length > 0
     && chat?.messages[chat?.messages.length - 1];
   const router = useRouter();
+  
+  const seen = lastMessage?.seenBy?.find(member => member._id === currentUser._id);
+   
 
   return (
     <div className={`chat-box ${chat._id === currentChatId ? "bg-blue-2" : ""}`} onClick={() => router.push(`/chats/${chat._id}`)}>
@@ -31,6 +34,7 @@ const ChatBox = ({chat, currentUser, currentChatId}) => {
           ) : (
             <p className="text-base-bold">{otherMembers[0]?.username}</p>
           )}
+          {!lastMessage && <p className='text-small-bold'>Started A Chat</p>}
           <p className="text-base-light text-gray-3">
             {!lastMessage && format(new Date(chat?.createdAt), "p")}
           </p>
