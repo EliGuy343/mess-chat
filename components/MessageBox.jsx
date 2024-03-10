@@ -9,11 +9,11 @@ const MessageBox = ({message, currentUser}) => {
             <img
               src={message?.sender?.profileImage || "/assets/person.jpg"}
               alt="profile photo"
-              className="message-profile photo"
+              className="message-profile photo w-5 h-5"
             />
             <div className="message-info">
               <p className="text-small-bold">
-                {message?.sender?.username} &#160; &#183; &#160; {format(new Date(message?.cratedAt), "p")}
+                {message?.sender?.username} &#160; &#183; &#160; {message?.createdAt}
               </p>
               {message?.text ? (
                 <p className="message-text">{message?.text}</p>
