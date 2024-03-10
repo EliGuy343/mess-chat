@@ -67,7 +67,7 @@ const ChatDetails = ({chatId}) => {
       const res = await fetch(`/api/messages`, {
         method:"POST",
         headers:{
-          "Content-type":"application/json"
+          "Content-Type":"application/json"
         },
         body: JSON.stringify({
           chatId,
@@ -84,7 +84,7 @@ const ChatDetails = ({chatId}) => {
       getChatDetails();
     }
   }, [currentUser, chatId])
-  console.log(chat.messages)
+  
   return loading ? <Loader/> : (
     <div className="chat-details">
       <div className="chat-header">
@@ -127,7 +127,7 @@ const ChatDetails = ({chatId}) => {
         <div className="prepare-message">
           <CldUploadButton
             options={{maxFiles: 1}}
-            onUpload={() => {}}
+            onUpload={sendPhoto}
             uploadPreset='npczwv3c'
           >
             <AddPhotoAlternate 
