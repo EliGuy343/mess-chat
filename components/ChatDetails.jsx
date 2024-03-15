@@ -7,6 +7,7 @@ import { AddPhotoAlternate } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
 import { CldUploadButton } from "next-cloudinary";
 import MessageBox from "./MessageBox";
+import { pusherClient } from "@lib/pusher";
 
 const ChatDetails = ({chatId}) => {
   const {data: session} = useSession();
@@ -79,6 +80,27 @@ const ChatDetails = ({chatId}) => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    pusherClient.subscribe(chatId);
+    
+    const handleMessage = (newMessage) => {
+      setChat((prevChat) => {
+        return {
+          ...prevChat,
+          messages: [...prevChat.messages, newMessage]
+        };
+      });
+    }
+
+    pusherClient.bind("new-message", handleMessage);
+
+    return () => {
+      pusherClient.unsubscribe(chatId);
+      pusherClient.unbind("new-message", handleMessage);
+    }
+  }, [])
+  
   useEffect(() => {
     if(currentUser && chatId) {
       getChatDetails();

@@ -1,3 +1,4 @@
+import { pusherServer } from "@lib/pusher";
 import Chat from "@models/Chat";
 import Message from "@models/Message";
 import { connectToDB } from "@mongodb";
@@ -33,7 +34,7 @@ export const POST = async (req) => {
       model: "User"
     })
     .exec();
-
+    await pusherServer.trigger(chatId, "new-message", newMessage);
     return new Response(JSON.stringify(newMessage), {status:200});
   } catch (err) {
     console.log(err);
